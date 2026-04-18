@@ -27,9 +27,14 @@ body {
     radial-gradient(circle at top left, rgba(125, 249, 208, 0.2), transparent 28%),
     radial-gradient(circle at bottom right, rgba(255, 200, 87, 0.18), transparent 24%),
     linear-gradient(135deg, var(--bg), var(--bg-accent));
+  overflow-x: hidden;
 }
 
 input {
+  font: inherit;
+}
+
+button {
   font: inherit;
 }
 
@@ -48,6 +53,7 @@ input {
   background: var(--card);
   box-shadow: var(--shadow);
   backdrop-filter: blur(18px);
+  animation: rise-in 0.8s ease-out both;
 }
 
 .hero-copy h1 {
@@ -81,12 +87,52 @@ input {
   margin-top: 34px;
 }
 
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 28px;
+}
+
+.ghost-button,
+.copy-button,
+.history-item {
+  cursor: pointer;
+  transition:
+    transform 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease;
+}
+
+.ghost-button {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 12px 18px;
+}
+
+.ghost-button:hover,
+.copy-button:hover,
+.history-item:hover {
+  transform: translateY(-2px);
+}
+
 .panel {
   display: block;
   padding: 22px;
   border-radius: 24px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
+  animation: rise-in 0.8s ease-out both;
+}
+
+.panel:nth-child(1) {
+  animation-delay: 0.08s;
+}
+
+.panel:nth-child(2) {
+  animation-delay: 0.16s;
 }
 
 .panel-title {
@@ -133,6 +179,16 @@ input {
   color: rgba(255, 255, 255, 0.28);
 }
 
+.copy-button {
+  margin-top: 14px;
+  width: 100%;
+  border: 0;
+  border-radius: 16px;
+  padding: 12px 14px;
+  background: linear-gradient(135deg, rgba(125, 249, 208, 0.18), rgba(255, 200, 87, 0.18));
+  color: var(--text);
+}
+
 .result-bar {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -161,6 +217,65 @@ input {
   font-size: clamp(1.2rem, 3vw, 1.8rem);
 }
 
+.history-panel {
+  margin-top: 28px;
+  padding: 22px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.history-header h2 {
+  margin: 0;
+  font-size: 1.6rem;
+}
+
+.history-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  text-align: left;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+}
+
+.history-item span {
+  color: var(--secondary);
+}
+
+.history-empty {
+  margin: 0;
+  color: var(--muted);
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (max-width: 720px) {
   .hero-card {
     padding: 24px;
@@ -170,5 +285,18 @@ input {
   .converter-grid,
   .result-bar {
     grid-template-columns: 1fr;
+  }
+
+  .toolbar {
+    justify-content: stretch;
+  }
+
+  .ghost-button {
+    width: 100%;
+  }
+
+  .history-item {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
